@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using Scripts.PlayerScript;
+using TMPro;
+using System;
 
 namespace Scripts.EnemyScript
 {
@@ -13,7 +15,10 @@ namespace Scripts.EnemyScript
         [SerializeField] private float maxEnemyHealth;
         private float currentEnemyHealth;
         [SerializeField] private Slider enemyHealthSlider;
+
+
         private GameController gameController;
+        public DamageTextScript damageText;
         public void SetGameController(GameController controller) //баян - переделать
         {
             gameController = controller;
@@ -30,6 +35,7 @@ namespace Scripts.EnemyScript
         {
             currentEnemyHealth -= damage;
             enemyHealthSlider.value = currentEnemyHealth;
+
             if (currentEnemyHealth <= 0)
             {
                 EnemyDie();
@@ -43,6 +49,7 @@ namespace Scripts.EnemyScript
             }
             Destroy(gameObject);
         }
+
     }
 }
 
