@@ -12,6 +12,7 @@ namespace Scripts.EnemyScript
     {
         [SerializeField] private float maxEnemyHealth;
         private float currentEnemyHealth;
+        [SerializeField] private Slider enemyHealthSlider;
         private GameController gameController;
         public void SetGameController(GameController controller) //баян - переделать
         {
@@ -21,11 +22,14 @@ namespace Scripts.EnemyScript
         private void Awake()
         {
             currentEnemyHealth = maxEnemyHealth;
+            enemyHealthSlider.maxValue = maxEnemyHealth;
+            enemyHealthSlider.value = currentEnemyHealth;
         }
 
         public void TakeDamage(float damage)
         {
             currentEnemyHealth -= damage;
+            enemyHealthSlider.value = currentEnemyHealth;
             if (currentEnemyHealth <= 0)
             {
                 EnemyDie();
