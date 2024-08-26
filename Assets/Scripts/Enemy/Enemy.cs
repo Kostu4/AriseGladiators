@@ -18,7 +18,6 @@ namespace Scripts.EnemyScript
 
 
         private GameController gameController;
-        public DamageTextScript damageText;
         public void SetGameController(GameController controller) //баян - переделать
         {
             gameController = controller;
@@ -26,6 +25,7 @@ namespace Scripts.EnemyScript
 
         private void Awake()
         {
+            
             currentEnemyHealth = maxEnemyHealth;
             enemyHealthSlider.maxValue = maxEnemyHealth;
             enemyHealthSlider.value = currentEnemyHealth;
@@ -33,9 +33,11 @@ namespace Scripts.EnemyScript
 
         public void TakeDamage(float damage)
         {
-            currentEnemyHealth -= damage;
+            float currentdamage= UnityEngine.Random.Range(damage*0.8f, damage*1.2f);
+            int currentDamage = (int)currentdamage;
+            Debug.Log("damage: " + currentDamage);
+            currentEnemyHealth -= currentDamage;
             enemyHealthSlider.value = currentEnemyHealth;
-
             if (currentEnemyHealth <= 0)
             {
                 EnemyDie();
@@ -49,7 +51,6 @@ namespace Scripts.EnemyScript
             }
             Destroy(gameObject);
         }
-
     }
 }
 

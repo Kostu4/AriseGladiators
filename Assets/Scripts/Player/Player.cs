@@ -5,13 +5,13 @@ namespace Scripts.PlayerScript
 {
     public class Player : MonoBehaviour
     {
-        [SerializeField] private float currentPlayerDamage;
+        [SerializeField] private float playerDamage;
 
         public void AttackEnemy(Enemy enemy)
         { 
             if(enemy != null)
             {
-                enemy.TakeDamage(currentPlayerDamage);
+                enemy.TakeDamage(playerDamage);
             }
         }
     }

@@ -36,10 +36,9 @@ public class GameController : MonoBehaviour
     }
     private void SpawnEnemy()
     {
-        Debug.LogWarning("Spawning...");
         int enemyChance = UnityEngine.Random.Range(0, 101);
         Debug.Log("enemyChance: " + enemyChance);
-        if (enemyChance <= 20)
+        if (enemyChance <= 12)
         {
             currentEnemy = Instantiate(enemyPrefabs[1], spawnPoint.position, Quaternion.identity);
         }
@@ -62,14 +61,12 @@ public class GameController : MonoBehaviour
 
     public void EnemyDeath(Enemy arg0)
     {
-        Debug.LogWarning("OnEnemyDeath");
         currentEnemy = null;
         StartCoroutine(RespawnEnemy(spawnDelay));
     }
 
     IEnumerator RespawnEnemy(float spawnDelay)
     {
-        Debug.LogWarning("Respawn...");
         yield return new WaitForSeconds(spawnDelay);
         SpawnEnemy();
     }
