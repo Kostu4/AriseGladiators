@@ -315,7 +315,7 @@ GameObject:
   - component: {fileID: 5558892876178348537}
   - component: {fileID: 240837189628938286}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: Maneken
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -401,7 +401,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa93e9087f2601f4e897cd2d3c64db9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxEnemyHealth: 75
+  maxEnemyHealth: 99999
   enemyHealthSlider: {fileID: 6280476155744547701}
 --- !u!70 &240837189628938286
 CapsuleCollider2D:

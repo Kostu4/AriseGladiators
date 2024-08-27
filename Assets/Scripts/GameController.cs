@@ -47,16 +47,6 @@ public class GameController : MonoBehaviour
             currentEnemy = Instantiate(enemyPrefabs[0], spawnPoint.position, Quaternion.identity);
         }
         currentEnemy.SetGameController(this);
-        StartCoroutine(ReachEnemy());
-    }
-
-    IEnumerator ReachEnemy()
-    {
-        while (currentEnemy.transform.position.x != 4.5f)
-        {
-            //currentEnemy.transform.position.x += 0.8f;
-            yield return new WaitForSeconds(0.2f);
-        }
     }
 
     public void EnemyDeath(Enemy arg0)

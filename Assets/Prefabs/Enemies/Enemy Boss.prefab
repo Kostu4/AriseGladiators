@@ -424,8 +424,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxEnemyHealth: 250
   enemyHealthSlider: {fileID: 1696772997174631295}
-  damageTextPrefab: {fileID: 1893534896337320099, guid: a6fc7855697807942abeda3e6ac4b2b6, type: 3}
-  textPoint: {fileID: 0}
 --- !u!1 &7120399481446206519
 GameObject:
   m_ObjectHideFlags: 0
@@ -461,7 +459,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 240, y: 75}
+  m_AnchoredPosition: {x: 275, y: 75}
   m_SizeDelta: {x: 250, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1696772997174631295

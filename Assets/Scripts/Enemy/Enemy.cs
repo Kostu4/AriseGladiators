@@ -35,7 +35,6 @@ namespace Scripts.EnemyScript
         {
             float currentdamage= UnityEngine.Random.Range(damage*0.8f, damage*1.2f);
             int currentDamage = (int)currentdamage;
-            Debug.Log("damage: " + currentDamage);
             currentEnemyHealth -= currentDamage;
             enemyHealthSlider.value = currentEnemyHealth;
             if (currentEnemyHealth <= 0)
