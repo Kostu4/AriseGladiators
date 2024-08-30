@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class SceneSwitcher : MonoBehaviour
 {
-    // Map button objects to scene names
     public ButtonSceneMapping[] buttonSceneMappings;
 
     void Start()

@@ -15,9 +15,11 @@ namespace Scripts.EnemyScript
         [SerializeField] private float maxEnemyHealth;
         private float currentEnemyHealth;
         [SerializeField] private Slider enemyHealthSlider;
+        [SerializeField] private int enemyCoins;
 
 
         private GameController gameController;
+        public Player player;
         public void SetGameController(GameController controller) //баян - переделать
         {
             gameController = controller;
@@ -25,10 +27,18 @@ namespace Scripts.EnemyScript
 
         private void Awake()
         {
-            
+            player = GameObject.FindWithTag("Player").GetComponent<Player>();
             currentEnemyHealth = maxEnemyHealth;
             enemyHealthSlider.maxValue = maxEnemyHealth;
             enemyHealthSlider.value = currentEnemyHealth;
+        }
+
+        private void OnMouseDown()
+        {
+            if (gameObject.CompareTag("Enemy"))
+            {;
+                player.AttackEnemy(gameObject.GetComponent<Enemy>());
+            }
         }
 
         public void TakeDamage(float damage)
@@ -39,9 +49,16 @@ namespace Scripts.EnemyScript
             enemyHealthSlider.value = currentEnemyHealth;
             if (currentEnemyHealth <= 0)
             {
+                GainCoin(enemyCoins);
                 EnemyDie();
             }
         }
+
+        private void GainCoin(int enemyCoins)
+        {
+            player.playerCoins += enemyCoins;
+        }
+
         public void EnemyDie()
         {
             if (gameController != null)

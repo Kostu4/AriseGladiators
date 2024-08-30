@@ -316,7 +316,7 @@ GameObject:
   - component: {fileID: 240837189628938286}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -403,6 +403,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxEnemyHealth: 75
   enemyHealthSlider: {fileID: 6280476155744547701}
+  enemyCoins: 5
+  player: {fileID: 0}
 --- !u!70 &240837189628938286
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

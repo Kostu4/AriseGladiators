@@ -302,7 +302,7 @@ GameObject:
   - component: {fileID: 8404112895272432873}
   m_Layer: 0
   m_Name: Enemy Boss
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -424,6 +424,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxEnemyHealth: 250
   enemyHealthSlider: {fileID: 1696772997174631295}
+  enemyCoins: 12
+  player: {fileID: 0}
 --- !u!1 &7120399481446206519
 GameObject:
   m_ObjectHideFlags: 0
