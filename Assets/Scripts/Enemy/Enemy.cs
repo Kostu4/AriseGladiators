@@ -1,72 +1,58 @@
-﻿using JetBrains.Annotations;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UI;
-using Scripts.PlayerScript;
-using TMPro;
+﻿using Scripts.PlayerScript;
 using System;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace Scripts.EnemyScript
 {
-    public class Enemy : MonoBehaviour
+    public class Enemy : MonoBehaviour, IEnemy
     {
+        [Header("Enemy Settings")]
         [SerializeField] private float maxEnemyHealth;
-        private float currentEnemyHealth;
         [SerializeField] private Slider enemyHealthSlider;
         [SerializeField] private int enemyCoins;
 
+        public float MaxEnemyHealth => maxEnemyHealth;
+        public float CurrentEnemyHealth { get; private set; }
+        public int EnemyCoins => enemyCoins;
 
-        private GameController gameController;
-        public Player player;
-        public void SetGameController(GameController controller) //баян - переделать
-        {
-            gameController = controller;
-        }
+        public event Action<IEnemy> OnDeath;
+        public event Action<int> OnCoinsGained;
+        public event Action OnClicked;
 
         private void Awake()
         {
-            player = GameObject.FindWithTag("Player").GetComponent<Player>();
-            currentEnemyHealth = maxEnemyHealth;
+            InitializeHealth();
+        }
+
+        private void InitializeHealth()
+        {
+            CurrentEnemyHealth = maxEnemyHealth;
             enemyHealthSlider.maxValue = maxEnemyHealth;
-            enemyHealthSlider.value = currentEnemyHealth;
+            enemyHealthSlider.value = CurrentEnemyHealth;
         }
 
         private void OnMouseDown()
         {
-            if (gameObject.CompareTag("Enemy"))
-            {;
-                player.AttackEnemy(gameObject.GetComponent<Enemy>());
-            }
+            OnClicked?.Invoke(); // Сообщение о клике
         }
 
         public void TakeDamage(float damage)
         {
-            float currentdamage= UnityEngine.Random.Range(damage*0.8f, damage*1.2f);
-            int currentDamage = (int)currentdamage;
-            currentEnemyHealth -= currentDamage;
-            enemyHealthSlider.value = currentEnemyHealth;
-            if (currentEnemyHealth <= 0)
+            CurrentEnemyHealth -= damage;
+            enemyHealthSlider.value = CurrentEnemyHealth;
+
+            if (CurrentEnemyHealth <= 0)
             {
-                GainCoin(enemyCoins);
-                EnemyDie();
+                OnCoinsGained?.Invoke(enemyCoins); // Уведомление о передаче монет
+                Die();
             }
         }
 
-        private void GainCoin(int enemyCoins)
+        private void Die()
         {
-            player.playerCoins += enemyCoins;
-        }
-
-        public void EnemyDie()
-        {
-            if (gameController != null)
-            {
-                gameController.isEnemyDead.Invoke(this);
-            }
+            OnDeath?.Invoke(this); // Уведомление о смерти врага
             Destroy(gameObject);
         }
     }
 }
-

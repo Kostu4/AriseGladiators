@@ -550,33 +550,6 @@ MonoBehaviour:
   spawnEnemyPoint: {fileID: 2045626984}
   spawnPlayerPoint: {fileID: 533459861}
   spawnDelay: 0.5
-  isEnemyDead:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5558892876178348537, guid: 69dbd545af860514fbf1fc10c85bfa41, type: 3}
-        m_TargetAssemblyTypeName: Scripts.EnemyScript.Enemy, Assembly-CSharp
-        m_MethodName: EnemyDie
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 8404112895272432873, guid: 3f37fa64ef0abbd47ad171979585ba95, type: 3}
-        m_TargetAssemblyTypeName: Scripts.EnemyScript.Enemy, Assembly-CSharp
-        m_MethodName: EnemyDie
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &2045626983
 GameObject:
   m_ObjectHideFlags: 0
