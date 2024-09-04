@@ -24,7 +24,7 @@ namespace Scripts.PlayerScript
         public void AddCoins(int amount)
         {
             PlayerCoins += amount;
-            // Здесь можно добавить логику сохранения монет или обновления UI
+            
         }
     }
 }

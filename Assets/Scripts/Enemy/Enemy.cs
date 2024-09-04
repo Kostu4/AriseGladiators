@@ -44,14 +44,14 @@ namespace Scripts.EnemyScript
 
             if (CurrentEnemyHealth <= 0)
             {
-                OnCoinsGained?.Invoke(enemyCoins); // Уведомление о передаче монет
+                OnCoinsGained.Invoke(enemyCoins); // Уведомление о передаче монет
                 Die();
             }
         }
 
         private void Die()
         {
-            OnDeath?.Invoke(this); // Уведомление о смерти врага
+            OnDeath.Invoke(this); // Уведомление о смерти врага
             Destroy(gameObject);
         }
     }

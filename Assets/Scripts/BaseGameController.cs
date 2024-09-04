@@ -3,7 +3,7 @@ using UnityEngine;
 using Scripts.PlayerScript;
 using Scripts.EnemyScript;
 
-public class GameController : MonoBehaviour
+public class BaseGameController : MonoBehaviour
 {
     [SerializeField] private Player playerPrefab;
     [SerializeField] private Enemy[] enemyPrefabs;
@@ -11,18 +11,18 @@ public class GameController : MonoBehaviour
     [SerializeField] private Transform spawnPlayerPoint;
     [SerializeField] private float spawnDelay = 2f;
 
-    private Player player;
+    protected Player player;
     private Enemy currentEnemy;
     private EnemySpawner enemySpawner;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         SpawnPlayer();
         enemySpawner = new EnemySpawner(enemyPrefabs, spawnEnemyPoint, HandleEnemyDeath);
         SpawnEnemy();
     }
 
-    private void SpawnPlayer()
+    protected void SpawnPlayer()
     {
         if (playerPrefab != null)
         {
@@ -30,22 +30,22 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private void SpawnEnemy()
+    protected void SpawnEnemy()
     {
         currentEnemy = enemySpawner.SpawnEnemy();
         if (currentEnemy != null)
         {
-            currentEnemy.OnCoinsGained += player.AddCoins; // Подписка на получение монет
-            currentEnemy.OnClicked += () => player.AttackEnemy(currentEnemy); // Подписка на клик
+            currentEnemy.OnCoinsGained += player.AddCoins; //тут на получение монет
+            currentEnemy.OnClicked += () => player.AttackEnemy(currentEnemy); //тут я подписываюсь на клик по врагу
         }
     }
 
-    private void HandleEnemyDeath(IEnemy enemy)
+    protected virtual void HandleEnemyDeath(IEnemy enemy)
     {
         StartCoroutine(RespawnEnemy(spawnDelay));
     }
 
-    private IEnumerator RespawnEnemy(float delay)
+    protected IEnumerator RespawnEnemy(float delay)
     {
         yield return new WaitForSeconds(delay);
         SpawnEnemy();
