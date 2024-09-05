@@ -24,7 +24,7 @@ namespace Scripts.PlayerScript
         public void AddCoins(int amount)
         {
             PlayerCoins += amount;
-            PlayerPrefs.SetInt("coins", PlayerCoins);
+            
         }
     }
 }
