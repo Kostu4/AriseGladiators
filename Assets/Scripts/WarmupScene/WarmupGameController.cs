@@ -6,6 +6,7 @@ using UnityEngine;
 using Scripts.EnemyScript;
 using Scripts.PlayerScript;
 using UnityEngine.UI;
+using static UnityEngine.EventSystems.EventTrigger;
 
 namespace Scripts.WarmupScene
 { 
@@ -23,7 +24,6 @@ namespace Scripts.WarmupScene
         protected override void Awake()
         {
             base.Awake();
-            timer = GetComponent<Timer>();
             timer.TimeOut.AddListener(TimerIsOut);
             endRoundCanvas.SetActive(false);
             Time.timeScale = isPaused ? 0 : 1;
@@ -35,17 +35,16 @@ namespace Scripts.WarmupScene
             base.HandleEnemyDeath(enemy);
             killCount++;
             killCountText.text = killCount.ToString();
-            coinsCollected += enemy.EnemyCoins/2;
+            coinsCollected += enemy.EnemyCoins*2;
             coinsCollectedText.text = coinsCollected.ToString();
-            base.HandleEnemyDeath(enemy);
+            GameManager.Instance.AddCoins(coinsCollected);
         }
 
         private void TimerIsOut()
         {
-            Debug.LogWarning("Timer is out Warmup");
             endRoundCanvas.SetActive(true);
             PauseGame();
-
+            GameManager.Instance.SaveCoins();
         }
 
         private void PauseGame()

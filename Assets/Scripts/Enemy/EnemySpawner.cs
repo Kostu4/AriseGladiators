@@ -25,9 +25,10 @@ namespace Scripts.EnemyScript
             Enemy enemy = UnityEngine.Object.Instantiate(enemyPrefabs[randomIndex], spawnPoint.position, Quaternion.identity);
 
             // Подписываемся на событие смерти врага
-            enemy.OnDeath += onEnemyDeath;
+            enemy.OnDeath.AddListener(enemy => onEnemyDeath.Invoke(enemy));
 
             return enemy;
         }
+
     }
 }

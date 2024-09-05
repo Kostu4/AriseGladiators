@@ -7,11 +7,8 @@ namespace Scripts.PlayerScript
     {
         [SerializeField] private float playerDamage;
         [SerializeField] private float playerHealth;
-        [SerializeField] private int playerCoins;
         public float PlayerDamage { get => playerDamage; set => playerDamage = value; }
         public float PlayerHealth { get => playerHealth; set => playerHealth = value; }
-
-        public int PlayerCoins { get => playerCoins; set => playerCoins = value; } // Свойство для монет
 
         public void AttackEnemy(IEnemy enemy)
         {
@@ -19,12 +16,6 @@ namespace Scripts.PlayerScript
             {
                 enemy.TakeDamage(PlayerDamage);
             }
-        }
-
-        public void AddCoins(int amount)
-        {
-            PlayerCoins += amount;
-            
         }
     }
 }

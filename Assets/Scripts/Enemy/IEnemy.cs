@@ -1,4 +1,4 @@
-﻿using System;
+﻿using UnityEngine.Events;
 
 namespace Scripts.EnemyScript
 {
@@ -8,10 +8,8 @@ namespace Scripts.EnemyScript
         float CurrentEnemyHealth { get; }
         int EnemyCoins { get; }
 
-        event Action<IEnemy> OnDeath; //Событие смерти
-        event Action<int> OnCoinsGained; //получения монет
-        event Action OnClicked; // Делегат для обработки клика
-
+        UnityEvent<IEnemy> OnDeath { get; } // Событие смерти
+        UnityEvent OnClicked { get; } // Событие клика
         void TakeDamage(float damage);
     }
 }

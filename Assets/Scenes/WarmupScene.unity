@@ -1207,7 +1207,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1811999802}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d8004ede2016714fa976f827065d7c2, type: 3}
+  m_Script: {fileID: 11500000, guid: a32b54da8e16fc244b88883b2bb49b5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 8974094583602033058, guid: 7c3d7a831d7af284898933020eeeaed0, type: 3}
@@ -1217,6 +1217,11 @@ MonoBehaviour:
   spawnEnemyPoint: {fileID: 2045626984}
   spawnPlayerPoint: {fileID: 533459861}
   spawnDelay: 2
+  timer: {fileID: 1639050278}
+  endRoundCanvas: {fileID: 868320928}
+  killCountText: {fileID: 975684447}
+  coinsCollectedText: {fileID: 659146447}
+  killCount: 0
 --- !u!1 &2045626983
 GameObject:
   m_ObjectHideFlags: 0

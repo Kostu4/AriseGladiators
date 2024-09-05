@@ -1,7 +1,6 @@
-﻿using Scripts.PlayerScript;
-using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 namespace Scripts.EnemyScript
 {
@@ -16,9 +15,8 @@ namespace Scripts.EnemyScript
         public float CurrentEnemyHealth { get; private set; }
         public int EnemyCoins => enemyCoins;
 
-        public event Action<IEnemy> OnDeath;
-        public event Action<int> OnCoinsGained;
-        public event Action OnClicked;
+        public UnityEvent<IEnemy> OnDeath { get; } = new UnityEvent<IEnemy>(); // Событие смерти
+        public UnityEvent OnClicked { get; } = new UnityEvent(); // Событие клика
 
         private void Awake()
         {
@@ -34,7 +32,7 @@ namespace Scripts.EnemyScript
 
         private void OnMouseDown()
         {
-            OnClicked?.Invoke(); // Сообщение о клике
+            OnClicked.Invoke(); // Сообщение о клике
         }
 
         public void TakeDamage(float damage)
@@ -44,7 +42,6 @@ namespace Scripts.EnemyScript
 
             if (CurrentEnemyHealth <= 0)
             {
-                OnCoinsGained.Invoke(enemyCoins); // Уведомление о передаче монет
                 Die();
             }
         }

@@ -2,6 +2,7 @@
 using UnityEngine;
 using Scripts.PlayerScript;
 using Scripts.EnemyScript;
+using UnityEditor.Build.Content;
 
 public class BaseGameController : MonoBehaviour
 {
@@ -35,8 +36,7 @@ public class BaseGameController : MonoBehaviour
         currentEnemy = enemySpawner.SpawnEnemy();
         if (currentEnemy != null)
         {
-            currentEnemy.OnCoinsGained += player.AddCoins; //тут на получение монет
-            currentEnemy.OnClicked += () => player.AttackEnemy(currentEnemy); //тут я подписываюсь на клик по врагу
+            currentEnemy.OnClicked.AddListener(() => player.AttackEnemy(currentEnemy));
         }
     }
 
