@@ -9,7 +9,6 @@ public class InstanceGameController : BaseGameController
     [SerializeField] private GameObject endRoundCanvas;
     public readonly UnityEvent killLimitReached = new();
 
-    private bool isPaused = false;
     private int killCount = 0;
     [SerializeField] private int killLimit = 5;
 
@@ -18,7 +17,6 @@ public class InstanceGameController : BaseGameController
         base.Awake();
         killLimitReached.AddListener(EndRound);
         endRoundCanvas.SetActive(false);
-        Time.timeScale = isPaused ? 0 : 1;
         killCountText.text = string.Format("{0}/{1}", killCount, killLimit);
     }
 
@@ -41,11 +39,5 @@ public class InstanceGameController : BaseGameController
         endRoundCanvas.SetActive(true);
         PauseGame();
         GameManager.Instance.SaveCoins();
-    }
-
-    private void PauseGame()
-    {
-        isPaused = true;
-        Time.timeScale = 0;
     }
 }

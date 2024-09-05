@@ -1,12 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using Scripts.EnemyScript;
-using Scripts.PlayerScript;
-using UnityEngine.UI;
-using static UnityEngine.EventSystems.EventTrigger;
+
 
 namespace Scripts.WarmupScene
 { 
@@ -17,7 +12,6 @@ namespace Scripts.WarmupScene
         [SerializeField] TMP_Text killCountText;
         [SerializeField] TMP_Text coinsCollectedText;
         
-        private bool isPaused = false;
         private int coinsCollected = 0;
         [SerializeField] private int killCount = 0;
 
@@ -26,7 +20,6 @@ namespace Scripts.WarmupScene
             base.Awake();
             timer.TimeOut.AddListener(TimerIsOut);
             endRoundCanvas.SetActive(false);
-            Time.timeScale = isPaused ? 0 : 1;
         }
 
         
@@ -45,16 +38,6 @@ namespace Scripts.WarmupScene
             endRoundCanvas.SetActive(true);
             PauseGame();
             GameManager.Instance.SaveCoins();
-        }
-
-        private void PauseGame()
-        {
-            isPaused = true;
-        }
-
-        private void ResumeGame()
-        {
-            isPaused = false;
         }
     }
 }

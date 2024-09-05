@@ -12,6 +12,8 @@ public class BaseGameController : MonoBehaviour
     [SerializeField] private Transform spawnPlayerPoint;
     [SerializeField] private float spawnDelay = 2f;
 
+    public bool isPaused = false;
+
     protected Player player;
     private Enemy currentEnemy;
     private EnemySpawner enemySpawner;
@@ -36,7 +38,14 @@ public class BaseGameController : MonoBehaviour
         currentEnemy = enemySpawner.SpawnEnemy();
         if (currentEnemy != null)
         {
-            currentEnemy.OnClicked.AddListener(() => player.AttackEnemy(currentEnemy));
+            currentEnemy.OnClicked.AddListener(() => AttackEnemy(currentEnemy));
+        }
+    }
+    public void AttackEnemy(IEnemy enemy)
+    {
+        if (enemy != null)
+        {
+            enemy.TakeDamage(player.PlayerDamage);
         }
     }
 
@@ -49,5 +58,14 @@ public class BaseGameController : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         SpawnEnemy();
+    }
+
+    public void PauseGame()
+    {
+        isPaused = true; Time.timeScale = 0;
+    }
+    public void ResumeGame()
+    {
+        isPaused = false; Time.timeScale = 1;
     }
 }

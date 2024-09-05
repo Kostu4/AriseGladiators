@@ -7,6 +7,5 @@ namespace Scripts.PlayerScript
         float PlayerDamage { get; set; }
         float PlayerHealth { get; set; }
 
-        void AttackEnemy(IEnemy enemy);
     }
 }

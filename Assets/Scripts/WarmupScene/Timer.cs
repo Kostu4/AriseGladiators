@@ -26,7 +26,6 @@ public class Timer : MonoBehaviour
         if (slider.value <= 0)
         {
             TimeOut.Invoke();
-            Debug.LogWarning("Timer is out");
         }
 
         float normalizedTime = slider.value / maxTime;
