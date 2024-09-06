@@ -43,7 +43,7 @@ public class BaseGameController : MonoBehaviour
     }
     public void AttackEnemy(IEnemy enemy)
     {
-        if (enemy != null)
+        if (enemy != null && !isPaused)
         {
             enemy.TakeDamage(player.PlayerDamage);
         }
@@ -62,10 +62,12 @@ public class BaseGameController : MonoBehaviour
 
     public void PauseGame()
     {
-        isPaused = true; Time.timeScale = 0;
+        Time.timeScale = 0;
+        isPaused = true; 
     }
     public void ResumeGame()
-    {
-        isPaused = false; Time.timeScale = 1;
+    {   
+        Time.timeScale = 1;
+        isPaused = false; 
     }
 }

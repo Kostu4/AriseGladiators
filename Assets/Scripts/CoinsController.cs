@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class CoinsController : MonoBehaviour
 {
-    public static GameManager Instance { get; private set; }
+    public static CoinsController Instance { get; private set; }
 
     public int coins; // Количество монет, доступное для сохранения
+
+    public Coins coinsScript;
 
     private void Awake()
     {
@@ -19,11 +21,13 @@ public class GameManager : MonoBehaviour
         }
 
         LoadCoins();
+
+        coinsScript.coinsBalanceText.text = coins.ToString();
     }
 
     public void SaveCoins()
     {
-        PlayerPrefs.SetInt("Coins", GameManager.Instance.coins);
+        PlayerPrefs.SetInt("Coins", CoinsController.Instance.coins);
         PlayerPrefs.Save(); // Сохраняем данные на диск
     }
 
@@ -35,11 +39,15 @@ public class GameManager : MonoBehaviour
     {
         if (PlayerPrefs.HasKey("Coins"))
         {
-            GameManager.Instance.coins = PlayerPrefs.GetInt("Coins");
+            CoinsController.Instance.coins = PlayerPrefs.GetInt("Coins");
         }
         else
         {
-            GameManager.Instance.coins = 0; // Если данных нет, устанавливаем начальное значение
+            CoinsController.Instance.coins = 0; // Если данных нет, устанавливаем начальное значение
         }
+    }
+    public void ReduceCoins(int amount)
+    {
+        coins -= amount;
     }
 }

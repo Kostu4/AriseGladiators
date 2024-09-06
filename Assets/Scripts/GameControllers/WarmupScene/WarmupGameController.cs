@@ -11,6 +11,7 @@ namespace Scripts.WarmupScene
         [SerializeField] GameObject endRoundCanvas;
         [SerializeField] TMP_Text killCountText;
         [SerializeField] TMP_Text coinsCollectedText;
+
         
         private int coinsCollected = 0;
         [SerializeField] private int killCount = 0;
@@ -28,16 +29,17 @@ namespace Scripts.WarmupScene
             base.HandleEnemyDeath(enemy);
             killCount++;
             killCountText.text = killCount.ToString();
-            coinsCollected += enemy.EnemyCoins*2;
+            coinsCollected += enemy.EnemyCoins/2;
+            CoinsController.Instance.AddCoins(enemy.EnemyCoins/2);
             coinsCollectedText.text = coinsCollected.ToString();
-            GameManager.Instance.AddCoins(coinsCollected);
+            
         }
 
         private void TimerIsOut()
         {
             endRoundCanvas.SetActive(true);
             PauseGame();
-            GameManager.Instance.SaveCoins();
+            CoinsController.Instance.SaveCoins();
         }
     }
 }

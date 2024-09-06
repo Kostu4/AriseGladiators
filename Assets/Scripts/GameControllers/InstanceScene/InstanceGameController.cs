@@ -31,13 +31,13 @@ public class InstanceGameController : BaseGameController
             {
                 killLimitReached.Invoke();
             }
-            GameManager.Instance.AddCoins(enemy.EnemyCoins);
+            CoinsController.Instance.AddCoins(enemy.EnemyCoins);
         }
     }
     private void EndRound()
     {
         endRoundCanvas.SetActive(true);
         PauseGame();
-        GameManager.Instance.SaveCoins();
+        CoinsController.Instance.SaveCoins();
     }
 }
