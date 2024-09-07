@@ -330,7 +330,7 @@ Transform:
   m_GameObject: {fileID: 7792453682684451160}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -401,7 +401,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa93e9087f2601f4e897cd2d3c64db9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxEnemyHealth: 75
+  maxEnemyHealth: 24
   enemyHealthSlider: {fileID: 6280476155744547701}
   enemyCoins: 5
 --- !u!70 &240837189628938286

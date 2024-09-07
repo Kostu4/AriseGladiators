@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
-using Scripts.WarmupScene;
 
 namespace Scripts.EnemyScript
 {
@@ -11,10 +10,12 @@ namespace Scripts.EnemyScript
         [SerializeField] private float maxEnemyHealth;
         [SerializeField] private Slider enemyHealthSlider;
         [SerializeField] private int enemyCoins;
+        //[SerializeField] private int expAmount;
 
         public float MaxEnemyHealth => maxEnemyHealth;
         public float CurrentEnemyHealth { get; private set; }
         public int EnemyCoins => enemyCoins;
+        //public int ExpAmount => expAmount;
 
         public UnityEvent<IEnemy> OnDeath { get; } = new UnityEvent<IEnemy>(); // Событие смерти
         public UnityEvent OnClicked { get; } = new UnityEvent(); // Событие клика
@@ -50,7 +51,19 @@ namespace Scripts.EnemyScript
         private void Die()
         {
             OnDeath.Invoke(this); // Уведомление о смерти врага
+            //ExpirenceController.Instance.AddExpirence(expAmount);
             Destroy(gameObject);
+        }
+
+        public void IncreaseDamage(int amount)
+        { 
+            //TODO
+        }
+
+        public void IncreaseHealth(int amount)
+        {
+            
+            maxEnemyHealth += amount;
         }
     }
 }

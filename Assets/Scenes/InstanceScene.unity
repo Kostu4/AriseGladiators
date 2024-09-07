@@ -409,7 +409,6 @@ GameObject:
   - component: {fileID: 976077787}
   - component: {fileID: 976077786}
   - component: {fileID: 976077785}
-  - component: {fileID: 976077784}
   m_Layer: 5
   m_Name: Back up Button
   m_TagString: Untagged
@@ -436,19 +435,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -62}
   m_SizeDelta: {x: 75, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &976077784
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 976077782}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a30d584c3644a5842ae7b0a251daaf72, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  buttonSceneMappings: []
 --- !u!114 &976077785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -493,10 +479,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 976077784}
-        m_TargetAssemblyTypeName: SceneSwitcher, Assembly-CSharp
-        m_MethodName: SwitchScene
-        m_Mode: 5
+      - m_Target: {fileID: 1811999805}
+        m_TargetAssemblyTypeName: GameController, Assembly-CSharp
+        m_MethodName: ReadyToNextLevel
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -518,7 +504,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.024262667, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -839,7 +825,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1811999802}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 617d045e704e8b445b5591b6cb0865e3, type: 3}
+  m_Script: {fileID: 11500000, guid: 4d8004ede2016714fa976f827065d7c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 8974094583602033058, guid: 7c3d7a831d7af284898933020eeeaed0, type: 3}
@@ -851,7 +837,8 @@ MonoBehaviour:
   spawnDelay: 2
   killCountText: {fileID: 2116588227}
   endRoundCanvas: {fileID: 2063458883}
-  killLimit: 5
+  isPaused: 0
+  isReadyToStart: 0
 --- !u!1 &1992503654
 GameObject:
   m_ObjectHideFlags: 0
@@ -1011,7 +998,7 @@ Transform:
   m_GameObject: {fileID: 2045626983}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.5, y: -1.5, z: 0}
+  m_LocalPosition: {x: 4.5, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -8,6 +8,8 @@ namespace Scripts.EnemyScript
         float CurrentEnemyHealth { get; }
         int EnemyCoins { get; }
 
+        //int ExpAmount { get; }
+
         UnityEvent<IEnemy> OnDeath { get; } // Событие смерти
         UnityEvent OnClicked { get; } // Событие клика
         void TakeDamage(float damage);
