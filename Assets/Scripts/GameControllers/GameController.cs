@@ -30,7 +30,6 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
-        currentEnemy = null;
         SpawnPlayer();
         SpawnEnemy();
         killLimitReached.AddListener(EndRound);
