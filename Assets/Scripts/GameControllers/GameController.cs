@@ -16,6 +16,8 @@ public class GameController : MonoBehaviour
     [SerializeField] private float spawnDelay = 2f;
     [SerializeField] private TMP_Text killCountText;
     [SerializeField] private GameObject endRoundCanvas;
+    //[SerializeField] private Transform container;
+    //[SerializeField] private GameObject[] buffCardsPrefabs;
 
     public readonly UnityEvent killLimitReached = new();
     public bool isPaused = false;
@@ -23,6 +25,7 @@ public class GameController : MonoBehaviour
 
     private Player player;
     private Enemy currentEnemy;
+    private Coroutine respawnCoroutine;
     #endregion
 
     private void Awake()
@@ -32,7 +35,7 @@ public class GameController : MonoBehaviour
 
         killLimitReached.AddListener(EndRound);
         endRoundCanvas.SetActive(false);
-        killCountText.text = $"{LevelManager.Instance.enemiesKilled}/{LevelManager.Instance.enemiesToKill}";
+        UpdateKillCountText();
     }
 
     #region Spawning
@@ -44,7 +47,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private void SpawnEnemy()
+    public void SpawnEnemy()
     {
         currentEnemy = Instantiate(enemyPrefabs[Random.Range(0, enemyPrefabs.Length)], spawnEnemyPoint.position, Quaternion.identity);
         currentEnemy.OnDeath.AddListener(enemy => HandleEnemyDeath(enemy));
@@ -63,10 +66,10 @@ public class GameController : MonoBehaviour
     #region DieEnemyInvoke
     private void HandleEnemyDeath(IEnemy enemy)
     {
-        if (isPaused == false)
+        if (!isPaused)
         {
             LevelManager.Instance.OnEnemyKilled();
-            killCountText.text = $"{LevelManager.Instance.enemiesKilled}/{LevelManager.Instance.enemiesToKill}";
+            UpdateKillCountText();
 
             StartCoroutine(RespawnEnemy(spawnDelay));
         }
@@ -74,20 +77,28 @@ public class GameController : MonoBehaviour
 
     private IEnumerator RespawnEnemy(float delay)
     {
-        Debug.Log($"Respawning enemy...");
+        Debug.Log("Respawn");
         yield return new WaitForSeconds(delay);
-
-        // Проверка на окончание уровня или паузу
         if (!isPaused)
         {
-            Debug.Log("Respawned enemy");
             SpawnEnemy();
+            Debug.Log("Spawn");
         }
     }
     #endregion
 
+    private void UpdateKillCountText()
+    {
+        killCountText.text = $"{LevelManager.Instance.enemiesKilled}/{LevelManager.Instance.enemiesToKill}";
+    }
+
     public void EndRound()
     {
+        if (respawnCoroutine != null)
+        {
+            StopCoroutine(RespawnEnemy(spawnDelay));
+        }
+
         endRoundCanvas.SetActive(true);
         PauseGame();
         StartCoroutine(ChangeScene());
@@ -102,10 +113,8 @@ public class GameController : MonoBehaviour
     {
         while (!isReadyToStart)
         {
-            //Debug.LogWarning("Waiting for isReadyToStart");
             yield return null;
         }
-        //Debug.LogWarning("Reload");
         LevelManager.Instance.ReloadScene();
     }
 
