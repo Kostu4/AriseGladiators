@@ -1,8 +1,5 @@
 ﻿using Scripts.EnemyScript;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
@@ -57,7 +54,7 @@ public class LevelManager : MonoBehaviour
 
     private void IncreaseEnemyStats()
     {
-        var enemies = FindObjectOfType<Enemy>();
+        var enemies = FindObjectsOfType<Enemy>();
         foreach (var enemy in enemies)
         {
             enemy.IncreaseHealth(currentLevel * enemyHealthIncrease);
@@ -67,26 +64,6 @@ public class LevelManager : MonoBehaviour
 
     public void LoadMainMenu()
     {
-        SceneManager.LoadScene("MainMenu");
-    }
-
-    public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        if (scene.name == "InstanceScene")
-        {
-            gameController = FindObjectOfType<GameController>();
-            enemy = FindObjectOfType<Enemy>();
-            AdvanceToNextLevel();
-        }
-    }
-
-    private void OnEnable()
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
-    private void OnDisable()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
+        SceneManager.LoadScene("MainScene");
     }
 }

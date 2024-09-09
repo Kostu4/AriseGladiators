@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
-using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -25,15 +21,12 @@ public class LevelSelectController : MonoBehaviour
 
         for (int i = 0; i < levelButtons.Length; i++)
         {
-            if (i + 1 <= unlockedLevel)
-            { 
-                levelButtons[i].interactable = true;
-                int levelIndex = i + 1;
-                levelButtons[i].onClick.AddListener(() => LoadLevel(levelIndex));
-            }
-            else
+            int levelIndex = i + 1;
+            levelButtons[i].interactable = levelIndex <= unlockedLevel; // Активируем кнопки до разблокированного уровня
+            levelButtons[i].onClick.RemoveAllListeners(); // Очищаем все слушатели, чтобы избежать повторного добавления
+            if (levelButtons[i].interactable)
             {
-                levelButtons[i].interactable = false;
+                levelButtons[i].onClick.AddListener(() => LoadLevel(levelIndex)); // Добавляем слушатель загрузки уровня
             }
         }
     }
@@ -43,8 +36,25 @@ public class LevelSelectController : MonoBehaviour
         levelSelectPanel.SetActive(!levelSelectPanel.activeSelf);
     }
     public void LoadLevel(int levelIndex)
-    { 
-        LevelManager levelManager = FindObjectOfType<LevelManager>();
-        //if
+    {
+        LevelManager levelManager = LevelManager.Instance;
+        if (levelManager != null) 
+        {
+            levelManager.SetupLevel(levelIndex);
+            SceneManager.LoadScene("InstanceScene");
+            levelSelectPanel.SetActive(false);
+        }
+    }
+
+    public void UnlockNextLevel(int completedLevel)
+    {
+        int highestUnlockedLevel = PlayerPrefs.GetInt("unlockedLevel", 1);
+
+        if (completedLevel >= highestUnlockedLevel)
+        {
+            PlayerPrefs.SetInt("unlockedLevel", completedLevel + 1);
+            PlayerPrefs.Save();
+            UpdateLevelButtons();
+        }
     }
 }

@@ -136,7 +136,7 @@ public class GameController : MonoBehaviour
         {
             yield return null;
         }
-        LevelManager.Instance.ReloadScene();
+        LevelManager.Instance.LoadMainMenu();
     }
 
     #region Pause

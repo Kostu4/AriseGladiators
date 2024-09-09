@@ -38,5 +38,13 @@ namespace Scripts.EnemyScript
                 OnEmenyClick.Invoke();
             }
         }
+
+        public void IncreaseHealth(int value)
+        { 
+            maxEnemyHealth += value;
+            CurrentEnemyHealth = maxEnemyHealth;
+            enemyHealthSlider.maxValue = maxEnemyHealth;
+            enemyHealthSlider.value = CurrentEnemyHealth;
+        }
     }
 }
