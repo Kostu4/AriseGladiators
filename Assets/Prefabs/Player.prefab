@@ -99,8 +99,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerDamage: 12
-  playerHealth: 100
-  playerCoins: 0
+  maxPlayerHealth: 100
+  playerDefence: 0
 --- !u!70 &357080104801917824
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

@@ -12,7 +12,6 @@ public class LevelManager : MonoBehaviour
     [SerializeField] public int enemiesKilled = 0;
 
     private GameController gameController;
-    private Enemy enemy;
 
     public int enemyHealthIncrease = 10;
 
@@ -28,6 +27,12 @@ public class LevelManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
+
+    public void SetupLevel(int LevelIndex)
+    { 
+        currentLevel = LevelIndex;
+        AdvanceToNextLevel();
+    }
     public void OnEnemyKilled()
     {
         enemiesKilled++;
@@ -40,29 +45,29 @@ public class LevelManager : MonoBehaviour
 
     private void AdvanceToNextLevel()
     {
-        currentLevel++;
-        Debug.Log($"Level: 1-{currentLevel}");
         enemiesKilled = 0;
 
         if (currentLevel % 5 == 0)
         {
             enemiesToKill++;
         }
+        
         IncreaseEnemyStats();
     }
 
     private void IncreaseEnemyStats()
     {
-        if (enemy != null)
+        var enemies = FindObjectOfType<Enemy>();
+        foreach (var enemy in enemies)
         {
-            enemy.IncreaseHealth(enemyHealthIncrease);
+            enemy.IncreaseHealth(currentLevel * enemyHealthIncrease);
             //enemy.IncreaseDamage(enemyDamageIncrease);
         }
     }
 
-    public void ReloadScene()
+    public void LoadMainMenu()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)

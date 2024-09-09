@@ -1,24 +1,23 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using System;
+using System.Collections;
 
 namespace Scripts.EnemyScript
 {
-    public class Enemy : MonoBehaviour, IEnemy
+    public class Enemy : MonoBehaviour
     {
         [Header("Enemy Settings")]
         [SerializeField] private float maxEnemyHealth;
-        [SerializeField] private Slider enemyHealthSlider;
-        [SerializeField] private int enemyCoins;
-        //[SerializeField] private int expAmount;
+        [SerializeField] public Slider enemyHealthSlider;
+        
 
+        public UnityEvent OnEmenyClick = new();
         public float MaxEnemyHealth => maxEnemyHealth;
-        public float CurrentEnemyHealth { get; private set; }
-        public int EnemyCoins => enemyCoins;
-        //public int ExpAmount => expAmount;
+        public float CurrentEnemyHealth { get; set; }
+        //public int EnemyCoins => enemyCoins;
 
-        public UnityEvent<IEnemy> OnDeath { get; } = new UnityEvent<IEnemy>(); // Событие смерти
-        public UnityEvent OnClicked { get; } = new UnityEvent(); // Событие клика
 
         private void Awake()
         {
@@ -32,38 +31,12 @@ namespace Scripts.EnemyScript
             enemyHealthSlider.value = CurrentEnemyHealth;
         }
 
-        private void OnMouseDown()
+        public void OnMouseDown()
         {
-            OnClicked.Invoke(); // Сообщение о клике
-        }
-
-        public void TakeDamage(float damage)
-        {
-            CurrentEnemyHealth -= damage;
-            enemyHealthSlider.value = CurrentEnemyHealth;
-
-            if (CurrentEnemyHealth <= 0)
-            {
-                Die();
+            if (CompareTag("Enemy"))
+            { 
+                OnEmenyClick.Invoke();
             }
-        }
-
-        private void Die()
-        {
-            OnDeath.Invoke(this); // Уведомление о смерти врага
-            //ExpirenceController.Instance.AddExpirence(expAmount);
-            Destroy(gameObject);
-        }
-
-        public void IncreaseDamage(int amount)
-        { 
-            //TODO
-        }
-
-        public void IncreaseHealth(int amount)
-        {
-            
-            maxEnemyHealth += amount;
         }
     }
 }

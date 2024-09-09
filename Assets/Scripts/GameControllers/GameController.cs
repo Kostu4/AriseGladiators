@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using Scripts.PlayerScript;
 using Scripts.EnemyScript;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -12,12 +13,12 @@ public class GameController : MonoBehaviour
     [SerializeField] private Player playerPrefab;
     [SerializeField] private Enemy[] enemyPrefabs;
     [SerializeField] private Transform spawnEnemyPoint;
+    [SerializeField] private Transform destinationEnemyPoint;
+    [SerializeField] private float moveSpeedEnemy;
     [SerializeField] private Transform spawnPlayerPoint;
-    [SerializeField] private float spawnDelay = 2f;
+    //[SerializeField] private float spawnDelay = 0.5f;
     [SerializeField] private TMP_Text killCountText;
     [SerializeField] private GameObject endRoundCanvas;
-    //[SerializeField] private Transform container;
-    //[SerializeField] private GameObject[] buffCardsPrefabs;
 
     public readonly UnityEvent killLimitReached = new();
     public bool isPaused = false;
@@ -25,14 +26,13 @@ public class GameController : MonoBehaviour
 
     private Player player;
     private Enemy currentEnemy;
-    private Coroutine respawnCoroutine;
     #endregion
 
     private void Awake()
     {
+        currentEnemy = null;
         SpawnPlayer();
         SpawnEnemy();
-
         killLimitReached.AddListener(EndRound);
         endRoundCanvas.SetActive(false);
         UpdateKillCountText();
@@ -49,43 +49,70 @@ public class GameController : MonoBehaviour
 
     public void SpawnEnemy()
     {
-        currentEnemy = Instantiate(enemyPrefabs[Random.Range(0, enemyPrefabs.Length)], spawnEnemyPoint.position, Quaternion.identity);
-        currentEnemy.OnDeath.AddListener(enemy => HandleEnemyDeath(enemy));
-        currentEnemy.OnClicked.AddListener(() => AttackEnemy(currentEnemy));
+        Debug.Log("Spawn");
+        int randomIndex = Random.Range(0, 101);
+        if (randomIndex <= 80)
+        {
+            currentEnemy = Instantiate(enemyPrefabs[0], spawnEnemyPoint.position, Quaternion.identity);
+            currentEnemy.OnEmenyClick.AddListener(() => AttackEnemy(currentEnemy));
+            StartCoroutine(MoveEnemyToDestination(currentEnemy));
+        }
+        else
+        {
+            currentEnemy = Instantiate(enemyPrefabs[1], spawnEnemyPoint.position, Quaternion.identity);
+            currentEnemy.OnEmenyClick.AddListener(() => AttackEnemy(currentEnemy));
+            StartCoroutine(MoveEnemyToDestination(currentEnemy));
+        }
+
+        Debug.Log("Spawned");
+    }
+
+    IEnumerator MoveEnemyToDestination(Enemy enemy)
+    {
+        Debug.Log("Start");
+        while (enemy != null && !isPaused)
+        { 
+            Debug.Log("While");
+            if (enemy.transform.position != destinationEnemyPoint.position)
+            {
+                Debug.Log("Move");
+                enemy.transform.position = Vector3.MoveTowards(enemy.transform.position, destinationEnemyPoint.position, moveSpeedEnemy * Time.deltaTime);
+            }
+            yield return null;
+            Debug.Log("Reached");
+        }
     }
     #endregion
-    
-    public void AttackEnemy(IEnemy enemy)
+
+    public void AttackEnemy(Enemy enemy)
     {
         if (enemy != null && !isPaused)
         {
-            enemy.TakeDamage(player.PlayerDamage);
+            TakeDamage(player.PlayerDamage);
         }
     }
 
-    #region DieEnemyInvoke
-    private void HandleEnemyDeath(IEnemy enemy)
-    {
-        if (!isPaused)
+    public void TakeDamage(int damage)
+    { 
+        currentEnemy.CurrentEnemyHealth -= damage;
+        currentEnemy.enemyHealthSlider.value = currentEnemy.CurrentEnemyHealth;
+
+        if (currentEnemy.CurrentEnemyHealth <= 0)
         {
-            LevelManager.Instance.OnEnemyKilled();
-            UpdateKillCountText();
-
-            StartCoroutine(RespawnEnemy(spawnDelay));
+            EnemyDie();
         }
     }
-
-    private IEnumerator RespawnEnemy(float delay)
+    public void EnemyDie()
     {
-        Debug.Log("Respawn");
-        yield return new WaitForSeconds(delay);
+        Destroy(currentEnemy.gameObject);
+        currentEnemy.OnEmenyClick.RemoveListener(() => AttackEnemy(currentEnemy));
+        LevelManager.Instance.OnEnemyKilled();
+        UpdateKillCountText();
         if (!isPaused)
         {
             SpawnEnemy();
-            Debug.Log("Spawn");
         }
     }
-    #endregion
 
     private void UpdateKillCountText()
     {
@@ -94,11 +121,6 @@ public class GameController : MonoBehaviour
 
     public void EndRound()
     {
-        if (respawnCoroutine != null)
-        {
-            StopCoroutine(RespawnEnemy(spawnDelay));
-        }
-
         endRoundCanvas.SetActive(true);
         PauseGame();
         StartCoroutine(ChangeScene());
