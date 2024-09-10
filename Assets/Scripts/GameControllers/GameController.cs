@@ -68,10 +68,8 @@ public class GameController : MonoBehaviour
 
     IEnumerator MoveEnemyToDestination(Enemy enemy)
     {
-        Debug.Log("Start");
         while (enemy != null && !isPaused)
         { 
-            Debug.Log("While");
             if (enemy.transform.position != destinationEnemyPoint.position)
             {
                 Debug.Log("Move");
@@ -128,15 +126,18 @@ public class GameController : MonoBehaviour
     public void ReadyToNextLevel()
     {
         isReadyToStart = true;
+        Debug.Log("ReadyToNextLevel");
     }
 
     private IEnumerator ChangeScene()
     {
         while (!isReadyToStart)
         {
+            Debug.Log("Waiting");
             yield return null;
         }
         LevelManager.Instance.LoadMainMenu();
+        Debug.Log("ChangeScene");
     }
 
     #region Pause

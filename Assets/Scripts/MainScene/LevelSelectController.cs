@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -8,6 +9,8 @@ public class LevelSelectController : MonoBehaviour
     [SerializeField] private GameObject levelSelectPanel;
     [SerializeField] private Button[] levelButtons;
     [SerializeField] private Button openLevelSelectButton;
+
+    public UnityEvent LevelIsCompleted = new();
 
     private void Start()
     {

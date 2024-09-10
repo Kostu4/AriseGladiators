@@ -9,6 +9,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] public int enemiesKilled = 0;
 
     private GameController gameController;
+    private readonly LevelSelectController levelSelectController = new();
 
     public int enemyHealthIncrease = 10;
 
@@ -23,6 +24,7 @@ public class LevelManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        levelSelectController.LevelIsCompleted.AddListener(() => levelSelectController.UnlockNextLevel(currentLevel));
     }
 
     public void SetupLevel(int LevelIndex)
@@ -37,6 +39,7 @@ public class LevelManager : MonoBehaviour
         {
             gameController = FindObjectOfType<GameController>();
             gameController.killLimitReached.Invoke();
+            levelSelectController.LevelIsCompleted.Invoke();
         }
     }
 
@@ -64,6 +67,18 @@ public class LevelManager : MonoBehaviour
 
     public void LoadMainMenu()
     {
-        SceneManager.LoadScene("MainScene");
+        if (gameController == null)
+        {
+            gameController = FindObjectOfType<GameController>();
+        }
+
+        if (gameController != null)
+        {
+            SceneManager.LoadScene("MainScene");
+        }
+        else
+        {
+            Debug.LogError("GameController не найден! Убедитесь, что объект существует на сцене.");
+        }
     }
 }
